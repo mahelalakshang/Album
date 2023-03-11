@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import Albums from './components/Albums';
+import Header from './components/Header'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Images from './components/Images'
+import Footer from './components/Footer';
 
 function App() {
+
+  const [showAsc,setShowAsc]=useState(true)
+
+  const changeOrder=(val)=>{
+    val=="false" && setShowAsc(false)
+    val=="true" && setShowAsc(true)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+         <div className='bg-success'>
+          <Header showAsc={showAsc} changeOrder={changeOrder}></Header>
+            <hr></hr>
+          </div>
+            <Route exact path="/" render={() => <Albums showAsc={showAsc} changeOrder={changeOrder}></Albums>} />
+            <Route path="/images/:id" render={() => <Images showAsc={showAsc} changeOrder={changeOrder}></Images>} /> 
+          <div>
+            <Footer></Footer>
+          </div> 
+      </Router>
   );
 }
 
